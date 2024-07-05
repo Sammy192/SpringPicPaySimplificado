@@ -33,13 +33,13 @@ public class User {
     private UserType userType;
 
     public User(UserDTO userDTO) {
-        this.firstName = userDTO.getFirstName();
-        this.lastName = userDTO.getLastName();
-        this.document = userDTO.getDocument();
-        this.email = userDTO.getEmail();
-        this.password = userDTO.getPassword();
-        this.balance = userDTO.getBalance();
-        this.userType = userDTO.getUserType();
+        this.firstName = userDTO.firstName();
+        this.lastName = userDTO.lastName();
+        this.document = userDTO.document();
+        this.email = userDTO.email();
+        this.password = userDTO.password();
+        this.balance = userDTO.balance();
+        this.userType = userDTO.userType();
     }
 
 }
