@@ -24,7 +24,7 @@ public class TransactionController {
     public ResponseEntity<DoneTransactionDTO> createTransaction(@RequestBody TransactionDTO transaction) throws Exception {
         DoneTransactionDTO newTransaction = transactionalService.createTransaction(transaction);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newTransaction.getId()).toUri();
+                .buildAndExpand(newTransaction.id()).toUri();
 
         //return new ResponseEntity<>(newTransaction, HttpStatus.OK);
         return ResponseEntity.created(uri).body(newTransaction);
