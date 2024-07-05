@@ -1,10 +1,9 @@
 package com.picpaysimplificado.services;
 
-import com.picpaysimplificado.dtos.UserDTO;
-import com.picpaysimplificado.entities.Transaction;
-import com.picpaysimplificado.entities.User;
 import com.picpaysimplificado.dtos.DoneTransactionDTO;
 import com.picpaysimplificado.dtos.TransactionDTO;
+import com.picpaysimplificado.entities.Transaction;
+import com.picpaysimplificado.entities.User;
 import com.picpaysimplificado.repositories.TransactionalRepository;
 import com.picpaysimplificado.repositories.UserRepository;
 import com.picpaysimplificado.services.exceptions.CustomTransactionException;
@@ -52,12 +51,7 @@ public class TransactionalService {
 
         copyDtoToEntity(transactionDTO, newTransaction, sender, receiver);
 
-        sender.setBalance(sender.getBalance().subtract(transactionDTO.value()));
-        receiver.setBalance(receiver.getBalance().add(transactionDTO.value()));
-
-        newTransaction = transactionalRepository.save(newTransaction);
-        userRepository.save(sender);
-        userRepository.save(receiver);
+        saveNewTransaction(sender, receiver, transactionDTO, newTransaction);
 
         notificationService.sendNotification(sender, "Transação realizada com sucesso");
         notificationService.sendNotification(receiver, "Transação recebida com sucesso");
@@ -71,5 +65,14 @@ public class TransactionalService {
         transactionalEntity.setSender(userSender);
         transactionalEntity.setReceiver(userReceiver);
         transactionalEntity.setTimestamp(Instant.now());
+    }
+
+    private void saveNewTransaction(User sender, User receiver, TransactionDTO transactionDTO, Transaction newTransaction) {
+        sender.setBalance(sender.getBalance().subtract(transactionDTO.value()));
+        receiver.setBalance(receiver.getBalance().add(transactionDTO.value()));
+
+        newTransaction = transactionalRepository.save(newTransaction);
+        userRepository.save(sender);
+        userRepository.save(receiver);
     }
 }
