@@ -4,8 +4,10 @@ import com.picpaysimplificado.entities.User;
 import com.picpaysimplificado.enums.UserType;
 import com.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.repositories.UserRepository;
+import com.picpaysimplificado.services.exceptions.DatabaseException;
 import com.picpaysimplificado.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,9 +42,14 @@ public class UserService {
 
     @Transactional
     public UserDTO createUser(UserDTO data) {
-        User newUser = new User(data);
-        userRepository.save(newUser);
-        return new UserDTO(newUser);
+        try {
+            User newUser = new User(data);
+            userRepository.save(newUser);
+            return new UserDTO(newUser);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Usuário já registrado no sistema.");
+        }
+
     }
 /*    @Transactional
     public void saveUser(User user) {
