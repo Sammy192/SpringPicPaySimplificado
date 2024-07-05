@@ -7,6 +7,7 @@ import com.picpaysimplificado.dtos.DoneTransactionDTO;
 import com.picpaysimplificado.dtos.TransactionDTO;
 import com.picpaysimplificado.repositories.TransactionalRepository;
 import com.picpaysimplificado.repositories.UserRepository;
+import com.picpaysimplificado.services.exceptions.CustomTransactionException;
 import com.picpaysimplificado.services.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class TransactionalService {
         boolean isAuthorized = authorizationService.authorizeTransaction(sender, transactionDTO.value());
 
         if(!isAuthorized) {
-            throw new Exception("Transação não autorizada");
+            throw new CustomTransactionException("Transação não autorizada");
         }
 
         Transaction newTransaction = new Transaction();

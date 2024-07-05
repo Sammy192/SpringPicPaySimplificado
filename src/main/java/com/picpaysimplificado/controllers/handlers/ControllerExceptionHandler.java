@@ -1,6 +1,7 @@
 package com.picpaysimplificado.controllers.handlers;
 
 import com.picpaysimplificado.dtos.CustomErrorDTO;
+import com.picpaysimplificado.services.exceptions.CustomTransactionException;
 import com.picpaysimplificado.services.exceptions.DatabaseException;
 import com.picpaysimplificado.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,6 +34,14 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<CustomErrorDTO> database(DatabaseException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(CustomTransactionException.class)
+    public ResponseEntity<CustomErrorDTO> database(CustomTransactionException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
         CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(status).body(err);
