@@ -1,11 +1,10 @@
 package com.picpaysimplificado.services;
 
-import com.picpaysimplificado.domain.user.User;
-import com.picpaysimplificado.domain.user.UserType;
+import com.picpaysimplificado.entities.User;
+import com.picpaysimplificado.enums.UserType;
 import com.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

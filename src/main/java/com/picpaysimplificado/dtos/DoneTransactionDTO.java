@@ -1,6 +1,6 @@
 package com.picpaysimplificado.dtos;
 
-import com.picpaysimplificado.domain.transaction.Transaction;
+import com.picpaysimplificado.entities.Transaction;
 
 import java.math.BigDecimal;
 import java.time.Instant;

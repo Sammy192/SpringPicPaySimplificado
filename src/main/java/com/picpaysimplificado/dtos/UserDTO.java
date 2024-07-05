@@ -1,7 +1,7 @@
 package com.picpaysimplificado.dtos;
 
-import com.picpaysimplificado.domain.user.User;
-import com.picpaysimplificado.domain.user.UserType;
+import com.picpaysimplificado.entities.User;
+import com.picpaysimplificado.enums.UserType;
 
 import java.math.BigDecimal;
 

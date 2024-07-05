@@ -1,6 +1,7 @@
-package com.picpaysimplificado.domain.user;
+package com.picpaysimplificado.entities;
 
 import com.picpaysimplificado.dtos.UserDTO;
+import com.picpaysimplificado.enums.UserType;
 import jakarta.persistence.*;
 import lombok.*;
 

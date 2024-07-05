@@ -1,8 +1,7 @@
 package com.picpaysimplificado.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.picpaysimplificado.domain.transaction.Transaction;
-import com.picpaysimplificado.domain.user.User;
+import com.picpaysimplificado.entities.Transaction;
+import com.picpaysimplificado.entities.User;
 import com.picpaysimplificado.dtos.DoneTransactionDTO;
 import com.picpaysimplificado.dtos.TransactionDTO;
 import com.picpaysimplificado.repositories.TransactionalRepository;

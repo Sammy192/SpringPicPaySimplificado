@@ -1,9 +1,8 @@
 package com.picpaysimplificado.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.picpaysimplificado.domain.user.User;
+import com.picpaysimplificado.entities.User;
 import com.picpaysimplificado.dtos.ResponseAuthorizationDTO;
-import com.picpaysimplificado.dtos.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
