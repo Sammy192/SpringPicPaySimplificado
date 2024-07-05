@@ -4,6 +4,7 @@ import com.picpaysimplificado.entities.User;
 import com.picpaysimplificado.enums.UserType;
 import com.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.repositories.UserRepository;
+import com.picpaysimplificado.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,11 +32,10 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserDTO findUserById(Long id) throws Exception {
-        Optional<User> obj = userRepository.findById(id);
-        User user = obj.orElseThrow(() -> new Exception("Usuário não encontrado"));
-
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado")
+        );
         return new UserDTO(user);
-
     }
 
     @Transactional

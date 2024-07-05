@@ -1,11 +1,13 @@
 package com.picpaysimplificado.services;
 
+import com.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.entities.Transaction;
 import com.picpaysimplificado.entities.User;
 import com.picpaysimplificado.dtos.DoneTransactionDTO;
 import com.picpaysimplificado.dtos.TransactionDTO;
 import com.picpaysimplificado.repositories.TransactionalRepository;
 import com.picpaysimplificado.repositories.UserRepository;
+import com.picpaysimplificado.services.exceptions.ResourceNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +33,11 @@ public class TransactionalService {
 
     @Transactional
     public DoneTransactionDTO createTransaction(TransactionDTO transactionDTO) throws Exception {
-        User sender = userRepository.getReferenceById(transactionDTO.senderId());
-        User receiver = userRepository.getReferenceById(transactionDTO.receiverId());
+        User sender = userRepository.findById(transactionDTO.senderId()).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Usuário sender id %d não encontrado.", transactionDTO.senderId())));
+
+        User receiver = userRepository.findById(transactionDTO.receiverId()).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Usuário receiver id %d não encontrado.", transactionDTO.receiverId())));
 
         userService.validateTransactional(sender, transactionDTO.value());
 
