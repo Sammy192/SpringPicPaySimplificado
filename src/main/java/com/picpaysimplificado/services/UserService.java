@@ -6,6 +6,7 @@ import com.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.repositories.UserRepository;
 import com.picpaysimplificado.services.exceptions.DatabaseException;
 import com.picpaysimplificado.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -60,5 +61,31 @@ public class UserService {
     public List<UserDTO> getAllUsers() {
         List<User> usersList = userRepository.findAll();
         return usersList.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public UserDTO update(Long id, UserDTO userDTO) {
+        try {
+            User userEntity = userRepository.getReferenceById(id);
+            copyDtoToEntity(userDTO, userEntity);
+
+            userEntity = userRepository.save(userEntity);
+            return new UserDTO(userEntity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Recurso não encontrado.");
+        }
+
+    }
+
+    private void copyDtoToEntity(UserDTO userDTO, User userEntity) {
+        userEntity.setFirstName(userDTO.firstName());
+        userEntity.setLastName(userDTO.lastName());
+        userEntity.setDocument(userDTO.document());
+        userEntity.setEmail(userDTO.email());
+        userEntity.setPassword(userDTO.password());
+        userEntity.setBalance(userDTO.balance());
+        userEntity.setUserType(userDTO.userType());
+
     }
 }
