@@ -2,20 +2,19 @@ package com.picpaysimplificado.domain.transaction;
 
 import com.picpaysimplificado.domain.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
-@Entity(name = "transaction")
-@Table(name = "transaction")
+@Entity(name="transactions")
+@Table(name="transactions")
 @Getter
 @Setter
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@NoArgsConstructor
+@EqualsAndHashCode(of="id")
+@ToString
 public class Transaction {
 
     @Id
@@ -31,5 +30,6 @@ public class Transaction {
     @JoinColumn(name = "receiver_id")
     private User receiver;
 
-    private LocalDateTime timestamp;
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant timestamp;
 }
