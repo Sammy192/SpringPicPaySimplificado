@@ -30,18 +30,14 @@ public class TransactionalService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-
     @Transactional
     public DoneTransactionDTO createTransaction(TransactionDTO transactionDTO) throws Exception {
-        User sender = userRepository.getReferenceById(transactionDTO.getSenderId());
-        User receiver = userRepository.getReferenceById(transactionDTO.getReceiverId());
+        User sender = userRepository.getReferenceById(transactionDTO.senderId());
+        User receiver = userRepository.getReferenceById(transactionDTO.receiverId());
 
-        userService.validateTransactional(sender, transactionDTO.getValue());
+        userService.validateTransactional(sender, transactionDTO.value());
 
-        boolean isAuthorized = authorizationService.authorizeTransaction(sender, transactionDTO.getValue());
+        boolean isAuthorized = authorizationService.authorizeTransaction(sender, transactionDTO.value());
 
         if(!isAuthorized) {
             throw new Exception("Transação não autorizada");
@@ -51,8 +47,8 @@ public class TransactionalService {
 
         copyDtoToEntity(transactionDTO, newTransaction, sender, receiver);
 
-        sender.setBalance(sender.getBalance().subtract(transactionDTO.getValue()));
-        receiver.setBalance(receiver.getBalance().add(transactionDTO.getValue()));
+        sender.setBalance(sender.getBalance().subtract(transactionDTO.value()));
+        receiver.setBalance(receiver.getBalance().add(transactionDTO.value()));
 
         newTransaction = transactionalRepository.save(newTransaction);
         userRepository.save(sender);
@@ -66,7 +62,7 @@ public class TransactionalService {
     }
 
     private void copyDtoToEntity(TransactionDTO transactionDTO, Transaction transactionalEntity, User userSender, User userReceiver) {
-        transactionalEntity.setAmount(transactionDTO.getValue());
+        transactionalEntity.setAmount(transactionDTO.value());
         transactionalEntity.setSender(userSender);
         transactionalEntity.setReceiver(userReceiver);
         transactionalEntity.setTimestamp(Instant.now());
