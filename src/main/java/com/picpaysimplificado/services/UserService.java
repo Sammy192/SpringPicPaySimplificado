@@ -31,9 +31,9 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findUserById(Long id) throws Exception {
+    public UserDTO findById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Recurso não encontrado")
+                () -> new ResourceNotFoundException("Usuário não encontrado.")
         );
         return new UserDTO(user);
     }
