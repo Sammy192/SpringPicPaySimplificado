@@ -41,6 +41,8 @@ public class User {
     @OneToMany(mappedBy = "sender")
     private List<Transaction> sentTransactions = new ArrayList<>();
 
+    private String statusNotificationService;
+
     public User(UserDTO userDTO) {
         this.firstName = userDTO.firstName();
         this.lastName = userDTO.lastName();
@@ -49,6 +51,7 @@ public class User {
         this.password = userDTO.password();
         this.balance = userDTO.balance();
         this.userType = userDTO.userType();
+        this.statusNotificationService = userDTO.statusNotificationService();
     }
 
     public void addSentTransaction(Transaction transaction) {

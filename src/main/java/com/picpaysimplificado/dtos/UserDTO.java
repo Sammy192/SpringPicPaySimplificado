@@ -13,7 +13,9 @@ public record UserDTO(
         BigDecimal balance,
         String email,
         String password,
-        UserType userType
+        UserType userType,
+
+        String statusNotificationService
 ) {
 
 
@@ -26,7 +28,8 @@ public record UserDTO(
                 userEntity.getBalance(),
                 userEntity.getEmail(),
                 userEntity.getPassword(),
-                userEntity.getUserType()
+                userEntity.getUserType(),
+                userEntity.getStatusNotificationService()
         );
     }
 

@@ -56,6 +56,15 @@ public class TransactionalService {
         saveNewTransaction(sender, receiver, transactionDTO, newTransaction);
 
         notificationService.sendNotification(sender, "Transação realizada com sucesso");
+
+        // Espera de 10 segundos pois o mock de serviço fica off ao realizar requests em sequencia.
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new Exception("Erro ao pausar a execução", e);
+        }
+
         notificationService.sendNotification(receiver, "Transação recebida com sucesso");
 
         return new DoneTransactionDTO(newTransaction);
