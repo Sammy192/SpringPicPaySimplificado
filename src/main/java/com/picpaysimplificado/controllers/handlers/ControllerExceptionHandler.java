@@ -40,7 +40,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(CustomTransactionException.class)
-    public ResponseEntity<CustomErrorDTO> database(CustomTransactionException e, HttpServletRequest request) {
+    public ResponseEntity<CustomErrorDTO> customTransactionError(CustomTransactionException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.FORBIDDEN;
         CustomErrorDTO err = new CustomErrorDTO(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
 

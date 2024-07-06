@@ -88,4 +88,13 @@ public class TransactionalService {
                 .map(DoneTransactionDTO::new)
                 .collect(Collectors.toList());
     }
+
+    public List<DoneTransactionDTO> getTransactionsByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException(String.format("Usuário id %d não encontrado.", userId)));
+        List<Transaction> transactions = transactionalRepository.findBySenderOrReceiver(user, user);
+        return transactions.stream()
+                .map(DoneTransactionDTO::new)
+                .collect(Collectors.toList());
+    }
 }

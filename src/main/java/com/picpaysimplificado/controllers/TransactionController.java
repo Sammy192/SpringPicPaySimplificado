@@ -2,7 +2,6 @@ package com.picpaysimplificado.controllers;
 
 import com.picpaysimplificado.dtos.DoneTransactionDTO;
 import com.picpaysimplificado.dtos.TransactionDTO;
-import com.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.services.TransactionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +32,12 @@ public class TransactionController {
     @GetMapping
     public ResponseEntity<List<DoneTransactionDTO>> getAllTransactions() {
         List<DoneTransactionDTO> transactions =  transactionalService.getAllTransactions();
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<DoneTransactionDTO>> getTransactionsByUserId(@PathVariable Long userId) {
+        List<DoneTransactionDTO> transactions = transactionalService.getTransactionsByUserId(userId);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 }

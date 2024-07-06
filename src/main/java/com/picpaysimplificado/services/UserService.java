@@ -7,6 +7,7 @@ import com.picpaysimplificado.repositories.UserRepository;
 import com.picpaysimplificado.services.exceptions.DatabaseException;
 import com.picpaysimplificado.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -64,7 +65,7 @@ public class UserService {
         return usersList.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(propagation = Propagation.SUPPORTS)
     public UserDTO update(Long id, UserDTO userDTO) {
         try {
             User userEntity = userRepository.getReferenceById(id);
@@ -75,6 +76,12 @@ public class UserService {
         }
         catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Recurso não encontrado.");
+        }
+        catch (ConstraintViolationException e) {
+            throw new DatabaseException("[CONSTRAINT] Falha de integridade referencial:) " + e.getMessage());
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("[INTEGRITY] Falha de integridade referencial");
         }
 
     }
