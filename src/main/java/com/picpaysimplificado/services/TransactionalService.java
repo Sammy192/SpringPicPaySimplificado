@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionalService {
@@ -71,8 +73,19 @@ public class TransactionalService {
         sender.setBalance(sender.getBalance().subtract(transactionDTO.value()));
         receiver.setBalance(receiver.getBalance().add(transactionDTO.value()));
 
+        // Adiciona a transação às listas de transações enviadas e recebidas
+        sender.addSentTransaction(newTransaction);
+        receiver.addReceivedTransaction(newTransaction);
+
         newTransaction = transactionalRepository.save(newTransaction);
         userRepository.save(sender);
         userRepository.save(receiver);
+    }
+
+    public List<DoneTransactionDTO> getAllTransactions() {
+        List<Transaction> transactions = transactionalRepository.findAll();
+        return transactions.stream()
+                .map(DoneTransactionDTO::new)
+                .collect(Collectors.toList());
     }
 }

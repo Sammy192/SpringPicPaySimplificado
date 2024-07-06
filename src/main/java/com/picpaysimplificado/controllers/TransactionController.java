@@ -2,16 +2,16 @@ package com.picpaysimplificado.controllers;
 
 import com.picpaysimplificado.dtos.DoneTransactionDTO;
 import com.picpaysimplificado.dtos.TransactionDTO;
+import com.picpaysimplificado.dtos.UserDTO;
 import com.picpaysimplificado.services.TransactionalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController()
 @RequestMapping(value = "/transactions")
@@ -28,5 +28,11 @@ public class TransactionController {
 
         //return new ResponseEntity<>(newTransaction, HttpStatus.OK);
         return ResponseEntity.created(uri).body(newTransaction);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DoneTransactionDTO>> getAllTransactions() {
+        List<DoneTransactionDTO> transactions =  transactionalService.getAllTransactions();
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 }

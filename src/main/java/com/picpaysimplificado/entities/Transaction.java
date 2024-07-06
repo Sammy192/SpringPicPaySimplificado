@@ -31,4 +31,5 @@ public class Transaction {
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant timestamp;
+
 }
