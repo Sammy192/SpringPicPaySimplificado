@@ -43,6 +43,14 @@ public class UserService {
         return new UserDTO(user);
     }
 
+    @Transactional(readOnly = true)
+    public UserDTO findUserByDocument(String document) {
+        User user = userRepository.findUserByDocument(document).orElseThrow(
+                () -> new ResourceNotFoundException("Usuário não encontrado.")
+        );
+        return new UserDTO(user);
+    }
+
     @Transactional
     public UserDTO createUser(UserDTO data) {
         try {

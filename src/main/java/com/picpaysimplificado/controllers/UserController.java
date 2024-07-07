@@ -58,4 +58,10 @@ public class UserController {
     public void delete(@PathVariable Long id) {
         userService.delete(id);
     }
+
+    @GetMapping(value = "/document/{document}")
+    public ResponseEntity<UserDTO> findUserByDocument(@PathVariable String document) {
+        UserDTO dto  = userService.findUserByDocument(document);
+        return ResponseEntity.ok(dto);
+    }
 }
