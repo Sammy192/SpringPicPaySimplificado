@@ -3,6 +3,7 @@ package com.picpaysimplificado.controllers;
 import com.picpaysimplificado.dtos.DoneTransactionDTO;
 import com.picpaysimplificado.dtos.TransactionDTO;
 import com.picpaysimplificado.services.TransactionalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class TransactionController {
     private TransactionalService transactionalService;
 
     @PostMapping
-    public ResponseEntity<DoneTransactionDTO> createTransaction(@RequestBody TransactionDTO transaction) throws Exception {
+    public ResponseEntity<DoneTransactionDTO> createTransaction(@Valid @RequestBody TransactionDTO transaction) throws Exception {
         DoneTransactionDTO newTransaction = transactionalService.createTransaction(transaction);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newTransaction.id()).toUri();
