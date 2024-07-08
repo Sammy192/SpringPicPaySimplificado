@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface TransactionalRepository extends JpaRepository<Transaction, Long> {
     List<Transaction> findBySenderOrReceiver(User sender, User receiver);
+
+    List<Transaction> findBySender_DocumentOrReceiver_Document(String senderDocument, String receiverDocument);
 }

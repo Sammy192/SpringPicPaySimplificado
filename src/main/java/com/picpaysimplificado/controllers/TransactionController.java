@@ -41,4 +41,10 @@ public class TransactionController {
         List<DoneTransactionDTO> transactions = transactionalService.getTransactionsByUserId(userId);
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
+
+    @GetMapping("/user/document/{userDocument}")
+    public ResponseEntity<List<DoneTransactionDTO>> getTransactionsByUserDocument(@PathVariable String userDocument) {
+        List<DoneTransactionDTO> transactions = transactionalService.getTransactionsByUserDocument(userDocument);
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
 }

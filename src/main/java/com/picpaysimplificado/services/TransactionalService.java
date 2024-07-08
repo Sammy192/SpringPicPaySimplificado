@@ -8,7 +8,7 @@ import com.picpaysimplificado.repositories.TransactionalRepository;
 import com.picpaysimplificado.repositories.UserRepository;
 import com.picpaysimplificado.services.exceptions.CustomTransactionException;
 import com.picpaysimplificado.services.exceptions.ResourceNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,6 +91,7 @@ public class TransactionalService {
         userRepository.save(receiver);
     }
 
+    @Transactional(readOnly = true)
     public List<DoneTransactionDTO> getAllTransactions() {
         List<Transaction> transactions = transactionalRepository.findAll();
         return transactions.stream()
@@ -98,10 +99,19 @@ public class TransactionalService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<DoneTransactionDTO> getTransactionsByUserId(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException(String.format("Usuário id %d não encontrado.", userId)));
         List<Transaction> transactions = transactionalRepository.findBySenderOrReceiver(user, user);
+        return transactions.stream()
+                .map(DoneTransactionDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<DoneTransactionDTO> getTransactionsByUserDocument(String document) {
+        List<Transaction> transactions = transactionalRepository.findBySender_DocumentOrReceiver_Document(document, document);
         return transactions.stream()
                 .map(DoneTransactionDTO::new)
                 .collect(Collectors.toList());
