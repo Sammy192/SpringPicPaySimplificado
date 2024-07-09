@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,10 +52,10 @@ public class UserControllersIT {
         existingDocument = "1234999222";
         nontExistingDocument = "12349992233";
 
-        existingUser = new User(null,"Mateus", "Silva","1234999222","mateus@example.com","123456", new BigDecimal("100.00"), UserType.COMMON, null, null, null);
+        existingUser = new User(null,"Mateus", "Silva","1234999222","mateus@example.com","123456", new BigDecimal("100.00"), UserType.COMMON, new ArrayList<>(), new ArrayList<>(), null);
         existingUserDTO = new UserDTO(existingUser);
 
-        newUser = new User(null,"Mick", "Silva","1234888222","mick@example.com","123456", new BigDecimal("100.00"), UserType.COMMON, null, null, null);
+        newUser = new User(null,"Mick", "Silva","1234888222","mick@example.com","123456", new BigDecimal("100.00"), UserType.COMMON, new ArrayList<>(), new ArrayList<>(), null);
         newUserDTO = new UserDTO(newUser);
 
     }
