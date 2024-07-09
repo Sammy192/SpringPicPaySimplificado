@@ -8,21 +8,19 @@ import com.picpaysimplificado.repositories.UserRepository;
 import com.picpaysimplificado.services.exceptions.CustomTransactionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class TransactionalServiceTests {
