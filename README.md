@@ -11,6 +11,8 @@ Esse repositório contém o projeto final desenvolvido para treinamento com base
 - Tratamento de validação na inserção de dados usando Spring Validation
 - Utilizado diversas notations do Spring
 
+- Referência [youtube](https://www.youtube.com/watch?v=QXunBiLq2SM&list=WL&index=27&t=1203s)
+
 ## Techs
 - Java Spring
 - Junit tests - Mockito
